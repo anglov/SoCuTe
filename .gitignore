@@ -58,3 +58,6 @@ target/
 
 # Django files
 SoCuTe/settings.py
+
+# PyCharm files
+.idea
