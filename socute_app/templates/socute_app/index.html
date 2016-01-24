@@ -8,7 +8,9 @@
 <form action="/index" method="post">
     {% csrf_token %}
     {{ form }}
-    <input type="submit" value="Submit" />
+    <button onclick="document.getElementById('id_text').value = sjcl.decrypt('kotek1', document.getElementById('id_text').value)">Click me</button>
 </form>
+    <script src="http://bitwiseshiftleft.github.io/sjcl/sjcl.js"></script>
+
 </body>
 </html>
