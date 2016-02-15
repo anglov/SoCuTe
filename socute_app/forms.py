@@ -26,8 +26,8 @@ class TextForm(ModelForm):
         model = TextModel
         fields = ('header', 'text', 'public')
         widgets = {
-            'header': TextInput(),
-            'text': Textarea(attrs={'cols': 150, 'rows': 60}),
+            'header': TextInput(attrs={'size': 150}),
+            'text': Textarea(attrs={'cols': 150, 'rows': 50}),
         }
 
 
@@ -38,8 +38,8 @@ class AnonTextForm(ModelForm):
         model = TextModel
         fields = ('header', 'text', 'public')
         widgets = {
-            'header': TextInput(),
-            'text': Textarea(attrs={'cols': 150, 'rows': 60}),
+            'header': TextInput(attrs={'size': 150}),
+            'text': Textarea(attrs={'cols': 150, 'rows': 50}),
             'public': CheckboxInput(attrs={'readonly':'readonly'}),
         }
 
@@ -51,6 +51,6 @@ class ViewTextForm(ModelForm):
         model = TextModel
         fields = ('header', 'text')
         widgets = {
-            'header': TextInput(),
-            'text': Textarea(attrs={'cols': 150, 'rows': 60}),
+            'header': TextInput(attrs={'size': 150}),
+            'text': Textarea(attrs={'cols': 150, 'rows': 50}),
         }

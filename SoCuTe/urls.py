@@ -8,7 +8,7 @@ urlpatterns = [
     url('^register/?$', views.register),
     url('^posts/?$', views.posts),
     url('^add/?$', views.add),
-    url('^post/?$', views.post),
+    url('^posts/post/?$', views.post),
     url('^index/?$', views.index),
     url(r'^/?$', views.index),
 ]

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http.response import HttpResponse, HttpResponseRedirect
 
-from socute_app.forms import AnonTextForm, TextForm, AuthForm, RegisterForm
+from socute_app.forms import AnonTextForm, TextForm, AuthForm, RegisterForm, ViewTextForm
 from socute_app.models import *
 from socute_app.tools import *
 
@@ -24,14 +24,13 @@ def add(request):
         if form.is_valid():
             text = TextModel()
             text.text = request.POST['text_hid']
-            text.expire_time = "1970-01-01"
+            text.expire_time = expire
             text.header = request.POST['header']
             text.owner = user
-            text.public = True
-            text.write = False
+            text.public = True if 'public' in request.POST else False
             text.full_clean()
             text.save()
-            return HttpResponseRedirect('/post?post_id=' + str(text.pk))
+            return render(request, 'socute_app/success.html', {'post': text})
     elif request.method == 'GET':
         if user_is_auth(request):
             form = TextForm()
@@ -98,14 +97,13 @@ def post(request):
         if not post.public:
             if not user_is_auth(request):
                 return HttpResponseRedirect('/login')
-            else:
-                username = user_name(request)
-                user = UserModel.objects.get(username=username)
-            if user.pk != post.owner:
+            username = user_name(request)
+            user = UserModel.objects.get(username=username)
+            if user != post.owner:
                 return HttpResponseRedirect('/login')
         crypted = post.text
         post.text = ""
-        form = TextForm(instance=post, initial={'text_hid': crypted})
+        form = ViewTextForm(instance=post, initial={'text_hid': crypted})
         return render(request, 'socute_app/post.html', {'form': form})
     else:
         return HttpResponse('Unavailable', status=403)

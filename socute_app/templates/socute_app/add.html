@@ -5,7 +5,7 @@
 <form action="/add" method="post">
     {% csrf_token %}
     {{ form }}
-    <button onclick="socute_encode()">Click me</button>
+    <button onclick="socute_encode()">Encode and submit</button>
 </form>
 {% load static from staticfiles %}
 <script src="http://bitwiseshiftleft.github.io/sjcl/sjcl.js"></script>

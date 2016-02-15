@@ -5,15 +5,56 @@
     <title>Secure Out Current Telegram</title>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+        padding-top: 80px;
+        padding-bottom: 40px;
+        }
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 </head>
-<body>
-{% if auth %}
-Jesteś zalogowany jako {{username}}. <a href="/logout">Wyloguj</a>
-{% else %}
-Nie jesteś zalogowany. <a href="/login">Zaloguj</a>
-{% endif %}
-{% block body %}
 
-{% endblock body %}
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">SoCuTe</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                {% if auth %}
+                <li class="navbar-text">Welcome, {{ username }}!</li>
+                <li><a href="/posts/">Your telegrams</a></li>
+                <li><a href="/add/">Add new telegram</a></li>
+                <li><a href="/logout/">Logout</a></li>
+
+                {% else %}
+                <li><a href="/register/">Register</a></li>
+                <li><a href="/login/">Login</a></li>
+                <li><a href="/add/">Add new telegram anonymously</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    {% block body %}
+    {% endblock body %}
+    <hr>
+    <footer>
+        <p>SoCuTe application ©2016 Your telegrams are now secure</p>
+    </footer>
+</div> <!-- /container -->
+
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
 </body>
 </html>

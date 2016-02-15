@@ -1,0 +1,7 @@
+{% extends "socute_app/main.html" %}
+
+{% block body %}
+<p>New telegram created sucessfully. You can acces found it here:
+<a href="posts/post?post_id={{ post.pk }}">{{ post.header }}</a>
+<p />
+{% endblock %}

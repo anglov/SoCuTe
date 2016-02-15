@@ -10,20 +10,10 @@ function socute_encode() {
 }
 function socute_decode() {
     try {
-        var query = getQueryParams(document.location.search);
-        document.getElementById('id_text').value = sjcl.decrypt(query.key, document.getElementById('id_text_hid').value)
+        var key = window.prompt("Enter the secret key","");
+        document.getElementById('id_text').value = sjcl.decrypt(key, document.getElementById('id_text_hid').value)
     }
     catch(err) {
         document.getElementById("id_text").value = "Wrong key!";
     }
-}
-function getQueryParams(qs) {
-    qs = qs.split('+').join(' ');
-    var params = {},
-        tokens,
-        re = /[?&]?([^=]+)=([^&]*)/g;
-    while (tokens = re.exec(qs)) {
-        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-    }
-    return params;
 }
