@@ -1,7 +1,7 @@
 from django import forms
 from socute_app.models import UserModel
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm, Textarea, TextInput, HiddenInput
+from django.forms import ModelForm, Textarea, TextInput, HiddenInput, CheckboxInput
 from socute_app.models import TextModel
 
 
@@ -24,7 +24,32 @@ class TextForm(ModelForm):
 
     class Meta:
         model = TextModel
-        fields = ('header', 'text', 'public', 'write')
+        fields = ('header', 'text', 'public')
+        widgets = {
+            'header': TextInput(),
+            'text': Textarea(attrs={'cols': 150, 'rows': 60}),
+        }
+
+
+class AnonTextForm(ModelForm):
+    text_hid = forms.CharField(widget=HiddenInput)
+
+    class Meta:
+        model = TextModel
+        fields = ('header', 'text', 'public')
+        widgets = {
+            'header': TextInput(),
+            'text': Textarea(attrs={'cols': 150, 'rows': 60}),
+            'public': CheckboxInput(attrs={'readonly':'readonly'}),
+        }
+
+
+class ViewTextForm(ModelForm):
+    text_hid = forms.CharField(widget=HiddenInput)
+
+    class Meta:
+        model = TextModel
+        fields = ('header', 'text')
         widgets = {
             'header': TextInput(),
             'text': Textarea(attrs={'cols': 150, 'rows': 60}),

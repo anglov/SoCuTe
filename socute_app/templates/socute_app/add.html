@@ -5,7 +5,9 @@
 <form action="/add" method="post">
     {% csrf_token %}
     {{ form }}
-    <button onclick="document.getElementById('id_text_hid').value = sjcl.encrypt('kotek1', document.getElementById('id_text').value)">Click me</button>
+    <button onclick="socute_encode()">Click me</button>
 </form>
-    <script src="http://bitwiseshiftleft.github.io/sjcl/sjcl.js"></script>
+{% load static from staticfiles %}
+<script src="http://bitwiseshiftleft.github.io/sjcl/sjcl.js"></script>
+    <script src="{% static 'socute_app/coding.js' %}"></script>
 {% endblock %}

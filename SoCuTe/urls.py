@@ -1,5 +1,5 @@
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls import include, url
-from django.contrib import admin
 from socute_app import views
 
 urlpatterns = [
@@ -8,7 +8,9 @@ urlpatterns = [
     url('^register/?$', views.register),
     url('^posts/?$', views.posts),
     url('^add/?$', views.add),
-    url('^post/?$', views.index),
+    url('^post/?$', views.post),
     url('^index/?$', views.index),
     url(r'^/?$', views.index),
 ]
+urlpatterns += staticfiles_urlpatterns()
+

@@ -2,9 +2,18 @@
 
 {% block body %}
 
-<form action="/add" method="post">
+<form action="/post" method="post">
     {% csrf_token %}
     {{ form }}
-    <button>Click me</button>
+        <button>Click me</button>
+</form>
+<input type="hidden" name="post_id" value='{{ post_id }}'/>
+{% load static from staticfiles %}
+
+    <script src="http://bitwiseshiftleft.github.io/sjcl/sjcl.js"></script>
+    <script src="{% static 'socute_app/coding.js' %}"></script>
+    <script>socute_decode()</script>
+
+
 </form>
 {% endblock %}

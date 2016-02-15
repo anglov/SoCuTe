@@ -1,20 +1,26 @@
 from django.shortcuts import render
 from django.http.response import HttpResponse, HttpResponseRedirect
 
-from socute_app.forms import TextForm, AuthForm, RegisterForm
-
+from socute_app.forms import AnonTextForm, TextForm, AuthForm, RegisterForm
 from socute_app.models import *
 from socute_app.tools import *
 
+import datetime
 
 def add(request):
-    if not user_is_auth(request):
-        return HttpResponseRedirect('/login')
-    username = user_name(request)
-    user = UserModel.objects.get(username=username)
+    if user_is_auth(request):
+        username = user_name(request)
+        user = UserModel.objects.get(username=username)
+    else:
+        user = None
 
     if request.method == 'POST':
-        form = TextForm(request.POST)
+        if user_is_auth(request):
+            form = TextForm(request.POST)
+            expire = datetime.date.today() + datetime.timedelta(days=30)
+        else:
+            form = AnonTextForm(request.POST)
+            expire = datetime.date.today() + datetime.timedelta(days=7)
         if form.is_valid():
             text = TextModel()
             text.text = request.POST['text_hid']
@@ -25,8 +31,12 @@ def add(request):
             text.write = False
             text.full_clean()
             text.save()
+            return HttpResponseRedirect('/post?post_id=' + str(text.pk))
     elif request.method == 'GET':
-        form = TextForm()
+        if user_is_auth(request):
+            form = TextForm()
+        else:
+            form = AnonTextForm()
     else:
         return HttpResponse(status=403)
     return render(request, 'socute_app/add.html', {'form': form})
@@ -77,6 +87,28 @@ def register(request):
         return HttpResponse(status=403)
     return render(request, 'socute_app/register.html', {'form': form})
 
+
+def post(request):
+    if request.method == 'GET':
+        try:
+            post_id = request.GET['post_id']
+            post = TextModel.objects.get(pk=post_id)
+        except TextModel.DoesNotExist:
+            return HttpResponse('Wrong post id', status=404)
+        if not post.public:
+            if not user_is_auth(request):
+                return HttpResponseRedirect('/login')
+            else:
+                username = user_name(request)
+                user = UserModel.objects.get(username=username)
+            if user.pk != post.owner:
+                return HttpResponseRedirect('/login')
+        crypted = post.text
+        post.text = ""
+        form = TextForm(instance=post, initial={'text_hid': crypted})
+        return render(request, 'socute_app/post.html', {'form': form})
+    else:
+        return HttpResponse('Unavailable', status=403)
 
 def log_out(request):
     _logout(request)

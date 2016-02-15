@@ -3,10 +3,9 @@ from django.db import models
 class TextModel(models.Model):
     header = models.TextField()
     text = models.TextField()
-    owner = models.ForeignKey('UserModel', null=False)
-    expire_time = models.DateField(auto_now_add=True)
-    public = models.BooleanField()
-    write = models.BooleanField()
+    owner = models.ForeignKey('UserModel', null=True, blank=True)
+    expire_time = models.DateField()
+    public = models.BooleanField(default=True)
 
 
 class UserModel(models.Model):
