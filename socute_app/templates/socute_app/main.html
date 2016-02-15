@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Secure Out Current Telegram</title>
+</head>
+<body>
+{% if auth %}
+Jesteś zalogowany jako {{username}}. <a href="/logout">Wyloguj</a>
+{% else %}
+Nie jesteś zalogowany. <a href="/login">Zaloguj</a>
+{% endif %}
+{% block body %}
+
+{% endblock body %}
+</body>
+</html>

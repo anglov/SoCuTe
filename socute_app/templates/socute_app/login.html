@@ -1,0 +1,10 @@
+{% extends "socute_app/main.html" %}
+
+{% block body %}
+
+<form action="/login" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button>Login</button>
+</form>
+{% endblock %}

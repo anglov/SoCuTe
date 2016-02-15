@@ -1,0 +1,12 @@
+{% extends "socute_app/main.html" %}
+
+{% block body %}
+<ul>
+{% for post in posts %}
+    <li><a href = "post?post_id={{ post.id }}">{{ post.header }}</a></li>
+    {% empty %}
+    No posts to show
+
+{% endfor %}
+</ul>
+{% endblock %}
