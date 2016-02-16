@@ -14,18 +14,17 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TextModel',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, serialize=False, primary_key=True)),
                 ('header', models.TextField()),
                 ('text', models.TextField()),
                 ('expire_time', models.DateField()),
                 ('public', models.BooleanField(default=True)),
-                ('write', models.BooleanField(default=False)),
             ],
         ),
         migrations.CreateModel(
             name='UserModel',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, serialize=False, primary_key=True)),
                 ('username', models.CharField(unique=True, max_length=50)),
                 ('password', models.CharField(max_length=500)),
                 ('salt', models.CharField(max_length=50)),
@@ -35,6 +34,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='textmodel',
             name='owner',
-            field=models.ForeignKey(null=True, to='socute_app.UserModel'),
+            field=models.ForeignKey(null=True, to='socute_app.UserModel', blank=True),
         ),
     ]
